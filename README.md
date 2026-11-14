@@ -53,6 +53,8 @@ Each one is covered by tests.
   suite is fast, free and deterministic.
 - **Data minimisation.** The agent asks only for a first name and a delivery zone: no phone, address
   or payment data.
+- **The API key is never stored.** It comes from the environment or from a masked prompt, lives only in
+  the running process, and is never written to disk or printed.
 
 ## Project layout
 
@@ -84,6 +86,9 @@ To chat with it you need an Anthropic API key:
 $env:ANTHROPIC_API_KEY = "<your key>"
 python -m delivery_agent
 ```
+
+If `ANTHROPIC_API_KEY` is not set, the program asks for it with a masked prompt, checks that it looks like an Anthropic key, and keeps it in memory
+for that run only.
 
 Configuration comes from environment variables (see `.env.example`). The default model is
 `claude-opus-5-5`; set `AGENT_MODEL` to use another one. If the API rejects the server-side refusal

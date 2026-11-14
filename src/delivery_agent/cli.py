@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 import json
-import os
 
 from .agent import Agent
+from .auth import ensure_api_key
 from .config import Settings
 from .prompts import SYSTEM_PROMPT
 from .shop import Shop
@@ -17,7 +17,7 @@ def ask_confirmation(tool_name: str, args: dict) -> bool:
 
 def main() -> int:
     settings = Settings.from_env()
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not ensure_api_key():
         print("ANTHROPIC_API_KEY is not set.")
         print('PowerShell:  $env:ANTHROPIC_API_KEY = "<your key>"')
         return 1

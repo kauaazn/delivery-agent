@@ -11,13 +11,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
 from delivery_agent.agent import Agent
+from delivery_agent.auth import ensure_api_key
 from delivery_agent.clock import ManualClock
 from delivery_agent.config import DEFAULT_MODEL, Settings
 from delivery_agent.prompts import SYSTEM_PROMPT
@@ -175,7 +175,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not ensure_api_key():
         print("ANTHROPIC_API_KEY is not set.")
         print('PowerShell:  $env:ANTHROPIC_API_KEY = "<your key>"')
         return 1
